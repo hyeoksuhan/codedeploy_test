@@ -22,4 +22,5 @@ artifacts:
     - 'dist/**/*'
     - package-lock.json
     - package.json
+    - appspec.yml
 
