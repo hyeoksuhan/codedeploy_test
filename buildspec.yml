@@ -23,5 +23,6 @@ artifacts:
     - 'scripts/*'
     - package-lock.json
     - package.json
+    - ecosystem.config.js
     - appspec.yml
 
