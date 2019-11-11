@@ -1,5 +1,5 @@
 import { Controller, Get } from "@tsed/common";
-import * as Express from "express";
+import { Request, Response } from "express";
 
 export interface TestResponse {
   message: string;
@@ -7,8 +7,8 @@ export interface TestResponse {
 
 @Controller("/test")
 export class TestCtrl {
-    @Get("/")
-    async get(_request: Express.Request, _response: Express.Response): Promise<TestResponse> {
-        return { message: "test" };
-    }
+  @Get("/")
+  async get(_req: Request, _res: Response): Promise<TestResponse> {
+    return { message: "test" };
+  }
 }

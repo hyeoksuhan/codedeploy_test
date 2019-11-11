@@ -22,10 +22,10 @@ export class Server extends ServerLoader {
   public $onReady() {
     console.log('Server started...');
   }
-
-  public $onServerInitError(err: Error) {
-    console.error(err);
-  }
 }
 
-new Server().start();
+new Server()
+  .start()
+  .catch((err: Error) => {
+    console.log('server starting error', err)
+  });
