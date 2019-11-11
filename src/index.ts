@@ -1,12 +1,31 @@
-import * as express from "express";
-import { Request, Response } from "express";
+import { ServerLoader, ServerSettings } from "@tsed/common";
+import Path = require("path");
 
-const app = express();
+@ServerSettings({
+  rootDir: Path.resolve(__dirname),
+  acceptMimes: ["application/json"],
+  port: process.env.PORT || 3000,
+})
+export class Server extends ServerLoader {
+  public $beforeRoutesInit(): void | Promise<any> {
+    const bodyParser = require('body-parser');
 
-app.get("/test", (_req: Request, res:Response) => {
-  res.send('GET /test');
-});
+    this
+      .use(bodyParser.json())
+      .use(bodyParser.urlencoded({
+        extended: true
+      }));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("ready");
-});
+    return null;
+  }
+
+  public $onReady() {
+    console.log('Server started...');
+  }
+}
+
+new Server()
+  .start()
+  .catch((err: Error) => {
+    console.log('server starting error', err)
+  });

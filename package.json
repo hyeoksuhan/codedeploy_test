@@ -6,15 +6,19 @@
   "scripts": {
     "start": "node dist/index.js",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "tsnd src/index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git@gmail.github.com:hyeoksuhan/codepipeline-test.git"
+    "url": "git@github.com:hyeoksuhan/codepipeline-test.git"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tsed/common": "5.33.2",
+    "@tsed/core": "5.33.2",
+    "@tsed/di": "5.33.2",
     "express": "4.17.1"
   },
   "devDependencies": {
@@ -22,6 +26,7 @@
     "@types/jest": "24.0.22",
     "@types/node": "12.12.6",
     "jest": "24.9.0",
+    "ts-node-dev": "1.0.0-pre.44",
     "typescript": "3.7.2"
   }
 }

@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 8
+
+  pre_build:
+    commands:
+    - npm install
+
+  build:
+    commands:
+    - npm run build
+
+cache:
+  paths:
+    - 'node_modules/**/*'
+
+artifacts:
+  files:
+    - 'dist/**/*'
+    - 'scripts/*'
+    - package-lock.json
+    - package.json
+    - ecosystem.config.js
+    - appspec.yml
+
