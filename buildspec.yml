@@ -19,7 +19,7 @@ cache:
 
 artifacts:
   files:
-    - 'dist/**/*'
+    - 'build/**/*'
     - 'scripts/*'
     - package-lock.json
     - package.json

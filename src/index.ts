@@ -1,31 +1,34 @@
-import { ServerLoader, ServerSettings } from "@tsed/common";
-import Path = require("path");
+import db from "./common/db";
+import { User } from "./entity/User";
 
-@ServerSettings({
-  rootDir: Path.resolve(__dirname),
-  acceptMimes: ["application/json"],
-  port: process.env.PORT || 3000,
-})
-export class Server extends ServerLoader {
-  public $beforeRoutesInit(): void | Promise<any> {
-    const bodyParser = require('body-parser');
+import { $log, ServerLoader } from "@tsed/common";
+import { Server } from "./server";
 
-    this
-      .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }));
+async function bootstrap() {
+  $log.info("Start server...");
+  const server = await ServerLoader.bootstrap(Server);
 
-    return null;
-  }
-
-  public $onReady() {
-    console.log('Server started...');
-  }
+  await server.listen();
+  $log.info("Server initialized");
 }
 
-new Server()
-  .start()
-  .catch((err: Error) => {
-    console.log('server starting error', err)
-  });
+db.connect().then(async connection => {
+  await bootstrap();
+
+  console.log("Inserting a new user into the database...");
+  const user = new User();
+  user.firstName = "Timber";
+  user.lastName = "Saw";
+  user.age = 25;
+
+  await connection.manager.save(user);
+  console.log("Saved a new user with id: " + user.id);
+
+  console.log("Loading users from the database...");
+  const users = await connection.manager.find(User);
+  console.log("Loaded users: ", users);
+
+  const _user = await connection.manager.findOne(User, 1);
+  console.log("user:", user);
+
+}).catch(error => console.log(error));
